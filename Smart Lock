@@ -1,0 +1,67 @@
+#define BLYNK_PRINT Serial
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+#include <Servo.h>
+
+Servo servo1, servo2, servo3;
+
+char auth[] = "E4U-6rFlLxK8jMgBldMrGY9psAGXjh7i";
+char ssid[] = "Zen's Phone";
+char pass[] = "#partaaksh";
+
+void setup()
+{
+  Serial.begin(9600);
+  Blynk.begin(auth, ssid, pass);
+  pinMode(0,OUTPUT);
+  servo1.attach(02); 
+  servo2.attach(04);
+  servo3.attach(05);
+ 
+  
+ }
+  
+void loop()
+{
+  digitalWrite(0,LOW);
+  Blynk.run();
+  
+}
+BLYNK_WRITE(V1)
+{
+ int pinValue = param.asInt(); 
+  servo1.write(pinValue);
+  if(pinValue>90)
+  digitalWrite(0,HIGH);
+  
+}
+BLYNK_WRITE(V2)
+{
+ int pinValue = param.asInt(); 
+  servo2.write(pinValue);
+ 
+ 
+}
+BLYNK_WRITE(V3)
+{
+  int pinValue = param.asInt(); 
+  servo3.write(pinValue);
+ 
+  
+}
+BLYNK_WRITE(V4)
+{
+  int pinValue = param.asInt(); 
+  servo1.write(pinValue);
+  servo2.write(pinValue);
+ 
+  
+}
+BLYNK_WRITE(V5)
+{
+  int pinValue = param.asInt(); 
+  servo1.write(pinValue);
+  servo3.write(pinValue);
+ 
+  
+}

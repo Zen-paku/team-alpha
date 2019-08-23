@@ -1,0 +1,94 @@
+#define BLYNK_PRINT Serial
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+#include <Servo.h>
+
+Servo servo1, servo2, servo3;
+int led1= 10;
+int led2= 9;
+int led3=0;
+char auth[] = "E4U-6rFlLxK8jMgBldMrGY9psAGXjh7i";
+char ssid[] = "Zen's Phone";
+char pass[] = "teamalpha";
+
+void setup()
+{
+  Serial.begin(9600);
+  Blynk.begin(auth, ssid, pass);
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(led3, OUTPUT);
+  servo1.attach(02); 
+  servo2.attach(04);
+  servo3.attach(05);
+ 
+  
+ }
+  
+void loop()
+{
+  
+digitalWrite(led1, LOW);
+digitalWrite(led2, LOW);
+digitalWrite(led3, LOW);
+  Blynk.run();
+  
+}
+BLYNK_WRITE(V1)
+{
+ int pinValue = param.asInt(); 
+  servo1.write(pinValue);
+ // Blynk.virtualWrite(V1, pinValue);
+  if(pinValue)
+  digitalWrite(led1, HIGH);
+ 
+}
+BLYNK_WRITE(V2)
+{
+ int pinValue = param.asInt(); 
+  servo2.write(pinValue);
+ // Blynk.virtualWrite(V2, pinValue);
+  if(pinValue)
+  digitalWrite(led2, HIGH);
+ 
+ 
+}
+BLYNK_WRITE(V3)
+{
+  int pinValue = param.asInt(); 
+  servo3.write(pinValue);
+ // Blynk.virtualWrite(V3, pinValue);
+  if(pinValue)
+  digitalWrite(led3, HIGH);
+  
+}
+BLYNK_WRITE(V4)
+{
+  int pinValue = param.asInt(); 
+  servo1.write(pinValue);
+  servo2.write(pinValue);
+  /*Blynk.virtualWrite(V1, pinValue);
+  Blynk.virtualWrite(V2, pinValue);*/
+  if(pinValue)
+  {  
+  digitalWrite(led1, HIGH);
+  digitalWrite(led2, HIGH);
+  }
+
+     
+}
+BLYNK_WRITE(V5)
+{
+  int pinValue = param.asInt(); 
+  servo1.write(pinValue);
+  servo3.write(pinValue);
+ /* Blynk.virtualWrite(V1, pinValue);
+  Blynk.virtualWrite(V3, pinValue);*/
+  if(pinValue)
+  {  
+  digitalWrite(led1, HIGH);
+  digitalWrite(led3, HIGH);
+  }
+ 
+  
+}
